@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yun's World - 雲的天地</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            color: #2d3436;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+            letter-spacing: -2px;
+        }
+
+        .subtitle {
+            color: #636e72;
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        .about {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: #636e72;
+            margin-bottom: 20px;
+            border-left: 4px solid #d68c9b;
+            padding-left: 15px;
+        }
+
+        p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #353b48;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 40px 0;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: #e8edf2;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #747d8c;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            background: #d68c9b;
+            color: white;
+        }
+
+        .contact {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #d68c9b 0%, #aebcd9 100%);
+            border-radius: 20px;
+            color: white;
+        }
+
+        .contact h2 {
+            color: white;
+            border-left-color: rgba(255,255,255,0.3);
+            padding-left: 15px;
+        }
+
+        .contact p {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: white;
+            color: #d68c9b;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #636e72;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .about { padding: 30px 20px; }
+            .gallery { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Yun's World</h1>
+            <p class="subtitle">雲的天地 - A simple digital garden</p>
+        </header>
+
+        <section class="about">
+            <h2>關於我</h2>
+            <p>你好，我是 Yun（雲）。這是一個屬於我自己的小空間，記錄著生活的碎片、閱讀的回憶與日常的小確幸。</p>
+            <br>
+            <p>在這裡，我不做太多東西，只做自己喜歡做的事。咖啡、音樂、設計、寫作……一切簡單而美好。</p>
+        </section>
+
+        <section class="gallery">
+            <div class="gallery-item">☕ 一杯手沖</div>
+            <div class="gallery-item">📚 翻開一本書</div>
+            <div class="gallery-item">🎵 午後的音樂</div>
+            <div class="gallery-item">✨ 某個美好的瞬間</div>
+            <div class="gallery-item">🌿 窗外的綠意</div>
+            <div class="gallery-item">🍃 散步與思考</div>
+        </section>
+
+        <section class="contact">
+            <h2>讓我們交流吧</h2>
+            <p>這裡是我的小天地，記錄著雲的碎片、閱讀的回憶與日常的小確幸。</p>
+            <br>
+            <p>咖啡 ☕ | 音樂 🎵 | 寫作 ✍️ | 生活 🌿</p>
+            <br>
+            <p>如果你喜歡這裡，或者有想聊的，歡迎聯繫我：</p>
+            <a href="https://t.me/yaayayaa_bot" class="btn" target="_blank">發送 Telegram 訊息</a>
+        </section>
+
+        <footer>
+            <p>Made with 🌿 & code | © 2026 Yun's World</p>
+        </footer>
+    </div>
+    <script>
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+            });
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

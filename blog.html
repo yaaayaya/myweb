@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Yun's World</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            color: #2d3436;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+
+        header { text-align: center; padding: 60px 0; }
+        
+        h1 { font-size: 2.5rem; font-weight: 300; letter-spacing: -2px; margin-bottom: 10px; }
+        .subtitle { color: #636e72; font-size: 1.1rem; }
+
+        .blog-nav { display: flex; justify-content: center; gap: 30px; margin: 40px 0; }
+        
+        .blog-nav a { text-decoration: none; color: #2d3436; font-weight: 500; transition: color 0.3s; }
+        .blog-nav a:hover { color: #d68c9b; }
+
+        .post-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .post-meta { font-size: 0.9rem; color: #636e72; margin-bottom: 15px; }
+        .post-title { font-size: 1.6rem; margin-bottom: 15px; color: #2d3436; }
+        .post-excerpt { color: #353b48; margin-bottom: 20px; }
+        
+        .read-more {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #d68c9b 0%, #aebcd9 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .read-more:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(214,140,155,0.3); }
+
+        footer { text-align: center; padding: 40px 0; color: #636e72; }
+        
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .post-card { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Blog</h1>
+            <p class="subtitle">雲的天地 - 生活碎片與閱讀筆記</p>
+        </header>
+
+        <nav class="blog-nav">
+            <a href="index.html">首頁</a>
+            <a href="#">關於我</a>
+        </nav>
+
+        <main>
+            <article class="post-card">
+                <div class="post-meta">March 5, 2026 | 寫作 | 💭</div>
+                <h2 class="post-title">開始建立個人網站</h2>
+                <p class="post-excerpt">第一次嘗試自己做網站，感覺很有趣。決定使用純 HTML+CSS，不依賴任何外部框架。</p>
+                <a href="#" class="read-more">閱讀更多 →</a>
+            </article>
+
+            <article class="post-card">
+                <div class="post-meta">February 28, 2026 | 生活 | ☕</div>
+                <h2 class="post-title">台北的春天來了</h2>
+                <p class="post-excerpt">剛入春，空氣裡的咖啡香和綠意讓人心情特別好。今天試著做了手沖。</p>
+                <a href="#" class="read-more">閱讀更多 →</a>
+            </article>
+
+            <article class="post-card">
+                <div class="post-meta">February 15, 2026 | 音樂 | 🎵</div>
+                <h2 class="post-title">推薦一張專輯</h2>
+                <p class="post-excerpt">最近發現的這張 Jazz 專輯，溫暖又放鬆，適合午後獨處時聽。</p>
+                <a href="#" class="read-more">閱讀更多 →</a>
+            </article>
+
+            <article class="post-card">
+                <div class="post-meta">January 20, 2026 | 技術 | 💻</div>
+                <h2 class="post-title">學習 Python 的旅程</h2>
+                <p class="post-excerpt">從零開始學習，雖然慢但很滿足。今天終於搞懂了 generators...</p>
+                <a href="#" class="read-more">閱讀更多 →</a>
+            </article>
+        </main>
+
+        <footer>
+            <p>Made with 🌿 & code | © 2026 Yun's World</p>
+            <br>
+            <p><a href="index.html" style="color:#d68c9b;text-decoration:none;">← 回到首頁</a></p>
+        </footer>
+    </div>
+</body>
+</html>
