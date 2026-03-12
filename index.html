@@ -5,185 +5,415 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yun's World - 雲的天地</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary: #d68c9b;
+            --secondary: #aebcd9;
+            --accent: #ffb74d;
+            --bg-start: #fff5f7;
+            --bg-end: #e3edf5;
+            --text-main: #2d3436;
+            --text-light: #636e72;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
-            color: #2d3436;
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            color: var(--text-main);
+            line-height: 1.7;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
+        /* Animated background blobs */
+        .background-blobs {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
         }
 
-        header {
-            text-align: center;
-            padding: 60px 0;
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.6;
+            animation: float 20s infinite ease-in-out;
         }
+
+        .blob-1 { top: -10%; left: -10%; width: 400px; height: 400px; 
+                 background: linear-gradient(45deg, var(--primary), #ff9f7b); animation-delay: 0s; }
+        .blob-2 { top: 60%; right: -5%; width: 300px; height: 300px; 
+                 background: linear-gradient(45deg, var(--accent), #ffd79f); animation-delay: -5s; }
+        .blob-3 { bottom: -5%; left: 20%; width: 250px; height: 250px; 
+                 background: linear-gradient(45deg, var(--secondary), #c8dce1); animation-delay: -10s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(20px, -30px) rotate(5deg); }
+            66% { transform: translate(-10px, 20px) rotate(-3deg); }
+        }
+
+        .container { max-width: 960px; margin: 0 auto; padding: 60px 40px; }
+
+        /* Header with animations */
+        header { text-align: center; padding: 80px 0; position: relative; }
 
         h1 {
-            font-size: 3rem;
-            font-weight: 300;
-            margin-bottom: 10px;
-            letter-spacing: -2px;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, var(--primary), #ff9f7b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 8s ease infinite;
         }
 
         .subtitle {
-            color: #636e72;
-            font-size: 1.1rem;
-            font-weight: 300;
+            color: var(--text-light);
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        .about {
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 20px;
-            padding: 40px;
-            margin: 30px 0;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        @keyframes gradientShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(20deg); }
+        }
+
+        /* Profile image with float effect */
+        .profile-section {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .profile-img {
+            width: 180px; height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            padding: 3px;
+            animation: floatImage 6s ease-in-out infinite;
+        }
+
+        .profile-img img {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            background: white;
+            object-fit: cover;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+        }
+
+        @keyframes floatImage {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* About section with card effect */
+        .about-section { text-align: center; margin-top: 60px; }
+
+        .card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px;
+            margin-top: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .card.visible {
+            transform: translateY(0);
+            opacity: 1;
         }
 
         h2 {
-            font-size: 1.5rem;
-            color: #636e72;
-            margin-bottom: 20px;
-            border-left: 4px solid #d68c9b;
-            padding-left: 15px;
+            font-size: clamp(1.8rem, 4vw, 2.3rem);
+            color: var(--text-main);
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px; left: 50%;
+            transform: translateX(-50%);
+            width: 60px; height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
         }
 
         p {
-            font-size: 1.05rem;
+            font-size: clamp(1.05rem, 2vw, 1.15rem);
+            color: var(--text-light);
+            margin-bottom: 25px;
             line-height: 1.8;
-            color: #353b48;
         }
 
-        .gallery {
+        /* Gallery with cards */
+        .gallery-section { margin-top: 60px; }
+
+        .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px;
             margin: 40px 0;
         }
 
         .gallery-item {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
             aspect-ratio: 1;
-            background: #e8edf2;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            color: #747d8c;
-            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: scale(0.9);
+            opacity: 0;
+        }
+
+        .gallery-item.visible {
+            transform: scale(1);
+            opacity: 1;
         }
 
         .gallery-item:hover {
-            transform: translateY(-5px);
-            background: #d68c9b;
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .gallery-img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-text {
             color: white;
-        }
-
-        .contact {
-            text-align: center;
-            padding: 40px;
-            background: linear-gradient(135deg, #d68c9b 0%, #aebcd9 100%);
-            border-radius: 20px;
-            color: white;
-        }
-
-        .contact h2 {
-            color: white;
-            border-left-color: rgba(255,255,255,0.3);
-            padding-left: 15px;
-        }
-
-        .contact p {
-            color: rgba(255,255,255,0.9);
-        }
-
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 30px;
-            background: white;
-            color: #d68c9b;
-            text-decoration: none;
-            border-radius: 50px;
+            font-size: 1.2rem;
             font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        footer {
             text-align: center;
-            padding: 20px;
-            color: #636e72;
-            font-size: 0.9rem;
+            padding: 15px 30px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
         }
 
-        @media (max-width: 600px) {
-            h1 { font-size: 2.2rem; }
-            .about { padding: 30px 20px; }
-            .gallery { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+        .gallery-item:hover .gallery-text {
+            transform: translateY(0);
+        }
+
+        /* Interactive elements */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin: 50px 0;
+        }
+
+        .stat-item { text-align: center; }
+        
+        .stat-number {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), #ff9f7b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            margin-top: 8px;
+            font-size: 0.95rem;
+        }
+
+        /* Contact section */
+        .contact-section { text-align: center; margin-top: 60px; padding: 40px;
+                      background: linear-gradient(135deg, rgba(214,140,155,0.1), rgba(174,188,217,0.1));
+                      border-radius: 30px;
+        }
+
+        .contact h2 { margin-bottom: 30px; }
+
+        .social-links { display: flex; justify-content: center; gap: 20px; }
+
+        .social-btn {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .social-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Footer */
+        footer { text-align: center; padding: 40px 0; color: var(--text-light); font-size: 0.9rem; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 640px) {
+            h1 { font-size: 2.5rem; }
+            .card { padding: 40px 30px; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .stat-item { margin-bottom: 25px; }
+            .profile-section { flex-direction: column; }
         }
     </style>
 </head>
 <body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
     <div class="container">
         <header>
             <h1>Yun's World</h1>
-            <p class="subtitle">雲的天地 - A simple digital garden</p>
+            <p class="subtitle">雲的天地 - Digital Garden</p>
         </header>
 
-        <section class="about">
-            <h2>關於我</h2>
-            <p>你好，我是 Yun（雲）。這是一個屬於我自己的小空間，記錄著生活的碎片、閱讀的回憶與日常的小確幸。</p>
-            <br>
-            <p>在這裡，我不做太多東西，只做自己喜歡做的事。咖啡、音樂、設計、寫作……一切簡單而美好。</p>
+        <section class="profile-section" data-aos="fade-up">
+            <div class="profile-img">
+                <img src="https://images.unsplash.com/photo-1544716278-ca5b9183d5f1?w=200&h=200&fit=crop" alt="Yun's Profile">
+            </div>
         </section>
 
-        <section class="gallery">
-            <div class="gallery-item">☕ 一杯手沖</div>
-            <div class="gallery-item">📚 翻開一本書</div>
-            <div class="gallery-item">🎵 午後的音樂</div>
-            <div class="gallery-item">✨ 某個美好的瞬間</div>
-            <div class="gallery-item">🌿 窗外的綠意</div>
-            <div class="gallery-item">🍃 散步與思考</div>
+        <section class="about-section">
+            <div class="card" id="about-card">
+                <h2>About Me</h2>
+                <p>Hello, I'm Yun. This is a small digital space where I collect life's fragments, reading memories, and daily little happinesses.</p>
+                <br>
+                <p>Here, I don't make too many things—just what brings me joy. ☕ Music 🎵 Design ✨ Writing 📝 Life 🌿</p>
+            </div>
         </section>
 
-        <section class="contact">
-            <h2>讓我們交流吧</h2>
-            <p>這裡是我的小天地，記錄著雲的碎片、閱讀的回憶與日常的小確幸。</p>
+        <section class="stats">
+            <div class="stat-item">
+                <div class="stat-number">3+</div>
+                <div class="stat-label">Years Creating</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">10k+</div>
+                <div class="stat-label">Readers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Projects</div>
+            </div>
+        </section>
+
+        <section class="gallery-section">
+            <h2>Moments Captured 📸</h2>
             <br>
-            <p>咖啡 ☕ | 音樂 🎵 | 寫作 ✍️ | 生活 🌿</p>
-            <br>
-            <p>如果你喜歡這裡，或者有想聊的，歡迎聯繫我：</p>
-            <a href="https://t.me/yaayayaa_bot" class="btn" target="_blank">發送 Telegram 訊息</a>
+            <div class="gallery-grid">
+                <div class="gallery-item" style="transition-delay: 0.1s;" data-aos="flip-left">
+                    <img src="https://images.unsplash.com/photo-1497935586381-b67a9bf8694f?w=400&h=400&fit=crop" class="gallery-img" alt="Coffee">
+                    <div class="gallery-overlay"><span class="gallery-text">Morning Brew ☕</span></div>
+                </div>
+                <div class="gallery-item" style="transition-delay: 0.2s;" data-aos="flip-left">
+                    <img src="https://images.unsplash.com/photo-1517260934395-d80d3dc6a8b3?w=400&h=400&fit=crop" class="gallery-img" alt="Reading">
+                    <div class="gallery-overlay"><span class="gallery-text">Lost in Books 📚</span></div>
+                </div>
+                <div class="gallery-item" style="transition-delay: 0.3s;" data-aos="flip-left">
+                    <img src="https://images.unsplash.com/photo-1520523839263-b413c7b64b4e?w=400&h=400&fit=crop" class="gallery-img" alt="Music">
+                    <div class="gallery-overlay"><span class="gallery-text">Jazz Sundays 🎵</span></div>
+                </div>
+                <div class="gallery-item" style="transition-delay: 0.4s;" data-aos="flip-left">
+                    <img src="https://images.unsplash.com/photo-1506126613100-774f906dc6a0?w=400&h=400&fit=crop" class="gallery-img" alt="Nature">
+                    <div class="gallery-overlay"><span class="gallery-text">Nature Walk 🌿</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <h2>Let's Connect ✨</h2>
+            <p style="margin-bottom: 30px; color: var(--text-light);">Your thoughts matter. Let's create something beautiful together.</p>
+            <div class="social-links">
+                <a href="https://t.me/yaayayaa_bot" target="_blank" class="social-btn" title="Telegram">📱</a>
+                <a href="#" class="social-btn" title="Instagram">📷</a>
+                <a href="#" class="social-btn" title="Email">✉️</a>
+                <a href="#" class="social-btn" title="GitHub">💻</a>
+            </div>
         </section>
 
         <footer>
-            <p>Made with 🌿 & code | © 2026 Yun's World</p>
+            <p>Made with 🌿 & code by Yun's World</p>
+            <br>
+            <p style="font-size: 0.8rem; opacity: 0.7;">© 2026 - Designed with soul</p>
         </footer>
     </div>
+
     <script>
-        document.querySelectorAll('.gallery-item').forEach(item => {
-            item.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.05)';
+        // Scroll animation observer
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
-            item.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .gallery-item, .stat-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
             });
+        });
+
+        // Add reveal animation on page load
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
         });
     </script>
 </body>
