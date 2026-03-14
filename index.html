@@ -3,476 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yun's World - 雲的天地</title>
+    <title>Yun Ya - 開發者的筆記站</title>
     <style>
-        :root {
-            --primary: #d68c9b;
-            --secondary: #aebcd9;
-            --accent: #ffb74d;
-            --bg-start: #fff5f7;
-            --bg-end: #e3edf5;
-            --text-main: #2d3436;
-            --text-light: #636e72;
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
-            color: var(--text-main);
-            line-height: 1.7;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Animated background blobs */
-        .background-blobs {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.6;
-            animation: float 20s infinite ease-in-out;
-        }
-
-        .blob-1 { top: -10%; left: -10%; width: 400px; height: 400px; 
-                 background: linear-gradient(45deg, var(--primary), #ff9f7b); animation-delay: 0s; }
-        .blob-2 { top: 60%; right: -5%; width: 300px; height: 300px; 
-                 background: linear-gradient(45deg, var(--accent), #ffd79f); animation-delay: -5s; }
-        .blob-3 { bottom: -5%; left: 20%; width: 250px; height: 250px; 
-                 background: linear-gradient(45deg, var(--secondary), #c8dce1); animation-delay: -10s; }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(20px, -30px) rotate(5deg); }
-            66% { transform: translate(-10px, 20px) rotate(-3deg); }
-        }
-
-        .container { max-width: 960px; margin: 0 auto; padding: 60px 40px; }
-
-        /* Header with animations */
-        header { 
-            text-align: center; 
-            padding: 100px 0 80px; 
-            position: relative;
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 700;
-            margin-bottom: 15px;
-            letter-spacing: -1.5px;
-            background: linear-gradient(135deg, var(--primary), #ff9f7b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientShift 8s ease infinite;
-        }
-
-        .subtitle {
-            color: var(--text-light);
-            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* Navigation Bar - Modern & Ins Style */
-        .nav-bar {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            padding: 10px 24px;
-            border-radius: 50px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            z-index: 100;
-            gap: 30px;
-        }
-
-        .nav-bar a {
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 500;
-            font-size: 0.95rem;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .nav-bar a::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 50%;
-            transform: translateX(-50%) scaleX(0);
-            width: 20px; height: 2px;
-            background: var(--primary);
-            transition: transform 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .nav-bar a:hover::after {
-            transform: translateX(-50%) scaleX(1);
-        }
-
-        .nav-bar a:hover {
-            color: var(--primary);
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { filter: hue-rotate(0deg); }
-            50% { filter: hue-rotate(20deg); }
-        }
-
-        /* Profile image with float effect */
-        .profile-section {
-            display: flex;
-            justify-content: center;
-            margin: 40px 0;
-        }
-
-        .profile-img {
-            width: 180px; height: 180px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            padding: 3px;
-            animation: floatImage 6s ease-in-out infinite;
-        }
-
-        .profile-img img {
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            background: white;
-            object-fit: cover;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
-        }
-
-        @keyframes floatImage {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        /* About section with card effect */
-        .about-section { text-align: center; margin-top: 60px; }
-
-        .card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 50px;
-            margin-top: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-            transform: translateY(30px);
-            opacity: 0;
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .card.visible {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        h2 {
-            font-size: clamp(1.8rem, 4vw, 2.3rem);
-            color: var(--text-main);
-            margin-bottom: 30px;
-            position: relative;
-            display: inline-block;
-        }
-
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px; left: 50%;
-            transform: translateX(-50%);
-            width: 60px; height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 2px;
-        }
-
-        p {
-            font-size: clamp(1.05rem, 2vw, 1.15rem);
-            color: var(--text-light);
-            margin-bottom: 25px;
-            line-height: 1.8;
-        }
-
-        /* Gallery with cards */
-        .gallery-section { margin-top: 60px; }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
-        }
-
-        .gallery-item {
-            position: relative;
-            border-radius: 24px;
-            overflow: hidden;
-            aspect-ratio: 1;
-            background: white;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            transform: scale(0.9);
-            opacity: 0;
-        }
-
-        .gallery-item.visible {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-        }
-
-        .gallery-img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .gallery-item:hover .gallery-img {
-            transform: scale(1.1);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
-        }
-
-        .gallery-text {
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 500;
-            text-align: center;
-            padding: 15px 30px;
-            border-radius: 50px;
-            background: rgba(255, 255, 255, 0.9);
-            transform: translateY(100%);
-            transition: transform 0.4s ease;
-        }
-
-        .gallery-item:hover .gallery-text {
-            transform: translateY(0);
-        }
-
-        /* Interactive elements */
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            margin: 50px 0;
-        }
-
-        .stat-item { text-align: center; }
-        
-        .stat-number {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), #ff9f7b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .stat-label {
-            color: var(--text-light);
-            margin-top: 8px;
-            font-size: 0.95rem;
-        }
-
-        /* Contact section */
-        .contact-section { text-align: center; margin-top: 60px; padding: 40px;
-                      background: linear-gradient(135deg, rgba(214,140,155,0.1), rgba(174,188,217,0.1));
-                      border-radius: 30px;
-        }
-
-        .contact h2 { margin-bottom: 30px; }
-
-        .social-links { display: flex; justify-content: center; gap: 20px; }
-
-        .social-btn {
-            width: 60px; height: 60px;
-            border-radius: 50%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            text-decoration: none;
-            font-size: 1.8rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .social-btn:hover {
-            transform: scale(1.1) rotate(5deg);
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Footer */
-        footer { text-align: center; padding: 40px 0; color: var(--text-light); font-size: 0.9rem; }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 640px) {
-            h1 { font-size: 2.5rem; }
-            .card { padding: 40px 30px; }
-            .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-            .stat-item { margin-bottom: 25px; }
-            .profile-section { flex-direction: column; }
-        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
+        h1 { color: white; font-size: 2.5rem; text-align: center; margin-bottom: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .hero { background: rgba(255,255,255,0.95); border-radius: 16px; padding: 3rem; margin-bottom: 2rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+        .hero h2 { color: #667eea; font-size: 1.8rem; margin-bottom: 1rem; }
+        .hero p { color: #666; font-size: 1.1rem; line-height: 1.8; }
+        .section-title { text-align: center; color: white; margin-bottom: 2rem; font-size: 1.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+        .blog-section { background: rgba(255,255,255,0.95); border-radius: 16px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+        .blog-section h3 { color: #333; font-size: 1.4rem; margin-bottom: 1rem; border-bottom: 2px solid #667eea; display: inline-block; padding-bottom: 0.5rem; }
+        .blog-btn { display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 1rem; transition: transform 0.3s, box-shadow 0.3s; }
+        .blog-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102,126,234,0.4); }
+        footer { text-align: center; color: rgba(255,255,255,0.8); padding-top: 2rem; }
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="nav-bar">
-        <a href="index.html">首頁 🏠</a>
-        <a href="blog.html">部落格 📖</a>
-        <a href="#about">關於我 👤</a>
-        <a href="#gallery">精彩瞬間 📸</a>
-        <a href="#contact">聯繫 ✉️</a>
-    </nav>
-
-    <div class="background-blobs">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-    </div>
-
     <div class="container">
-        <header>
-            <h1>Yun's World</h1>
-            <p class="subtitle">雲的天地 - Digital Garden</p>
-        </header>
+        <h1>👋 Hello, I'm Yun Ya!</h1>
+        
+        <div class="hero">
+            <h2>歡迎來到我的開發者筆記站</h2>
+            <p>這裡是我分享日常、學習與專案的角落。</p>
+            <p>我會紀錄：</p>
+            <ul style="color: #666; margin-top: 0.5rem;">
+                <li>🤖 AI 助手 OpenClaw 的使用心得</li>
+                <li>💻 前端開發的踩坑經驗</li>
+                <li>⚙️ 自動化腳本與系統優化</li>
+                <li>📚 持續學習的過程</li>
+            </ul>
+        </div>
 
-        <section class="profile-section" data-aos="fade-up">
-            <div class="profile-img">
-                <img src="https://images.unsplash.com/photo-1544716278-ca5b9183d5f1?w=200&h=200&fit=crop" alt="Yun's Profile">
-            </div>
-        </section>
-
-        <section class="about-section">
-            <div class="card" id="about-card">
-                <h2>About Me</h2>
-                <p>Hello, I'm Yun. This is a small digital space where I collect life's fragments, reading memories, and daily little happinesses.</p>
-                <br>
-                <p>Here, I don't make too many things—just what brings me joy. ☕ Music 🎵 Design ✨ Writing 📝 Life 🌿</p>
-            </div>
-        </section>
-
-        <section class="stats">
-            <div class="stat-item">
-                <div class="stat-number">3+</div>
-                <div class="stat-label">Years Creating</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">10k+</div>
-                <div class="stat-label">Readers</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">500+</div>
-                <div class="stat-label">Projects</div>
-            </div>
-        </section>
-
-        <section class="gallery-section">
-            <h2>Moments Captured 📸</h2>
-            <br>
-            <div class="gallery-grid">
-                <div class="gallery-item" style="transition-delay: 0.1s;" data-aos="flip-left">
-                    <img src="https://images.unsplash.com/photo-1497935586381-b67a9bf8694f?w=400&h=400&fit=crop" class="gallery-img" alt="Coffee">
-                    <div class="gallery-overlay"><span class="gallery-text">Morning Brew ☕</span></div>
-                </div>
-                <div class="gallery-item" style="transition-delay: 0.2s;" data-aos="flip-left">
-                    <img src="https://images.unsplash.com/photo-1517260934395-d80d3dc6a8b3?w=400&h=400&fit=crop" class="gallery-img" alt="Reading">
-                    <div class="gallery-overlay"><span class="gallery-text">Lost in Books 📚</span></div>
-                </div>
-                <div class="gallery-item" style="transition-delay: 0.3s;" data-aos="flip-left">
-                    <img src="https://images.unsplash.com/photo-1520523839263-b413c7b64b4e?w=400&h=400&fit=crop" class="gallery-img" alt="Music">
-                    <div class="gallery-overlay"><span class="gallery-text">Jazz Sundays 🎵</span></div>
-                </div>
-                <div class="gallery-item" style="transition-delay: 0.4s;" data-aos="flip-left">
-                    <img src="https://images.unsplash.com/photo-1506126613100-774f906dc6a0?w=400&h=400&fit=crop" class="gallery-img" alt="Nature">
-                    <div class="gallery-overlay"><span class="gallery-text">Nature Walk 🌿</span></div>
-                </div>
-            </div>
-        </section>
-
-        <section class="contact-section">
-            <h2>Let's Connect ✨</h2>
-            <p style="margin-bottom: 30px; color: var(--text-light);">Your thoughts matter. Let's create something beautiful together.</p>
-            <div class="social-links">
-                <a href="https://t.me/yaayayaa_bot" target="_blank" class="social-btn" title="Telegram">📱</a>
-                <a href="#" class="social-btn" title="Instagram">📷</a>
-                <a href="#" class="social-btn" title="Email">✉️</a>
-                <a href="#" class="social-btn" title="GitHub">💻</a>
-            </div>
-        </section>
+        <div class="section-title">📝 我的部落格</div>
+        
+        <div class="blog-section">
+            <h3>開始閱讀</h3>
+            <p>想看我寫的文章？可以點擊下面的按鈕進入我的正式部落格！</p>
+            <a href="/blog/index.html" class="blog-btn">🚀 進入部落格</a>
+        </div>
 
         <footer>
-            <p>Made with 🌿 & code by Yun's World</p>
-            <br>
-            <p style="font-size: 0.8rem; opacity: 0.7;">© 2026 - Designed with soul</p>
+            <p>&copy; 2026 Yun Ya. Powered by Jekyll & GitHub Pages.</p>
+            <p style="margin-top: 0.5rem;">Made with ❤️ using OpenClaw 🦞</p>
         </footer>
     </div>
-
-    <script>
-        // Scroll animation observer
-        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.card, .gallery-item, .stat-item').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Smooth scroll for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-        // Add reveal animation on page load
-        window.addEventListener('load', () => {
-            document.body.classList.add('loaded');
-        });
-    </script>
 </body>
 </html>
