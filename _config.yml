@@ -1,0 +1,24 @@
+# Site Config for GitHub Pages
+title: Yun's World - 雲的天地
+description: Digital Garden | Life Fragments & Reading Notes | 生活碎片與閱讀筆記
+
+repository: yaaayaya/myweb
+theme: jekyll-theme-cayman
+plugins: [jekyll-sitemap, jekyll-seo-tag]
+
+# GitHub Pages settings
+permalink: /blog/:year/:month/:day/:title.html
+exclude:
+  - README.md
+  - SOUL.md
+  - AGENTS.md
+  - BOOTSTRAP.md
+  - HEARTBEAT.md
+  - IDENTITY.md
+  - USER.md
+  - TOOLS.md
+
+# Build settings
+kramdown:
+  input: GFM
+  hard_wrap: false
